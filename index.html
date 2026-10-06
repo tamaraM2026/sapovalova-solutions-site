@@ -3,108 +3,353 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sapovalova Solutions | Clear decisions for people who build</title>
-<meta name="description" content="One-to-one work with Tamara Medina Sapovalova, for women deciding what comes after corporate and for founders building companies and teams.">
+<title>Sapovalova Solutions | Left corporate? Decide what's next.</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="stylesheet" href="style.css">
+
+<meta name="description" content="One to one work with Tamara Medina Sapovalova. Six sessions to decide whether to go back to corporate or build your own thing, and a 90 day plan for whichever you choose.">
+<style>
+  :root{
+    --ink:#17151c;
+    --ink-soft:#4a4752;
+    --paper:#f7f3ec;
+    --paper-2:#efe9de;
+    --line:#ddd5c6;
+    --white:#eeecf3;
+    --teal:#6fc0b3;
+    --blue:#7ba3d9;
+    --lilac:#c9a3e0;
+    --grad:linear-gradient(90deg,#6fc0b3,#7ba3d9,#c9a3e0);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.15;letter-spacing:-.01em}
+  .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* buttons */
+  .btn{display:inline-block;padding:15px 28px;border-radius:999px;text-decoration:none;font-weight:600;font-size:16px;transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--grad);color:var(--ink);box-shadow:0 8px 24px rgba(123,163,217,.25)}
+  .btn-ghost{border:1px solid rgba(238,236,243,.35);color:var(--white)}
+  .btn-dark{background:var(--ink);color:var(--white)}
+  .btn:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+
+  /* nav */
+  header.top{background:var(--ink);color:var(--white)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:var(--serif);font-size:19px}
+  .mono{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--ink);border:1.5px solid transparent;background-image:linear-gradient(var(--ink),var(--ink)),var(--grad);background-origin:border-box;background-clip:padding-box,border-box;font-family:var(--serif);font-size:18px}
+  .nav ul{display:flex;gap:28px;list-style:none;align-items:center;font-size:15px}
+  .nav ul a{text-decoration:none;opacity:.85}
+  .nav ul a:hover{opacity:1}
+  .nav .btn{padding:10px 20px;font-size:14px}
+
+  /* hero */
+  .hero{background:var(--ink);color:var(--white);padding:56px 0 96px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:auto -10% -40% -10%;height:70%;background:radial-gradient(60% 60% at 50% 0%,rgba(201,163,224,.22),transparent 70%);pointer-events:none}
+  .hero .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:center;position:relative}
+  .hero .eyebrow{color:var(--teal);margin-bottom:20px}
+  .hero h1{font-size:clamp(36px,5.2vw,58px);margin-bottom:24px}
+  .hero p.lead{font-size:20px;color:rgba(238,236,243,.82);max-width:34em;margin-bottom:34px}
+  .hero .actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .hero .reassure{margin-top:20px;font-size:14px;color:rgba(238,236,243,.6)}
+  .portrait{aspect-ratio:4/5;border-radius:20px;background:linear-gradient(160deg,rgba(111,192,179,.25),rgba(201,163,224,.25));overflow:hidden}
+
+  .portrait img{width:100%;height:100%;object-fit:cover;display:block;border-radius:20px}
+
+  /* trust bar */
+  .trust{background:var(--paper-2);border-bottom:1px solid var(--line)}
+  .trust .wrap{display:flex;flex-wrap:wrap;gap:12px 40px;justify-content:center;padding:18px 24px;font-size:15px;color:var(--ink-soft)}
+  .trust strong{color:var(--ink)}
+
+  section{padding:88px 0}
+  section h2{font-size:clamp(28px,3.6vw,40px);margin-bottom:16px}
+  .sub{color:var(--ink-soft);font-size:19px;max-width:36em}
+
+  /* mirror */
+  .mirror .cols{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:40px;align-items:start}
+  .mirror ul{list-style:none;display:grid;gap:14px}
+  .mirror li{padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:18px}
+  .mirror .after{font-family:var(--serif);font-size:24px;line-height:1.35}
+  .mirror .after span{display:block;margin-top:18px;font-family:var(--sans);font-size:17px;color:var(--ink-soft)}
+
+  /* offer */
+  .offer{background:var(--ink);color:var(--white)}
+  .offer .eyebrow{color:var(--lilac);margin-bottom:14px}
+  .offer .sub{color:rgba(238,236,243,.75)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+  .step{padding:28px;border-radius:18px;background:rgba(238,236,243,.05);border:1px solid rgba(238,236,243,.12)}
+  .step .n{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;font-weight:600}
+  .step h3{font-size:23px;margin-bottom:10px}
+  .step p{color:rgba(238,236,243,.75);font-size:16px}
+  .leave{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .leave div{padding-top:16px;border-top:2px solid transparent;border-image:var(--grad) 1;font-size:17px}
+  .pricebox{margin-top:52px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;padding:28px 32px;border-radius:18px;background:linear-gradient(120deg,rgba(111,192,179,.14),rgba(201,163,224,.14));border:1px solid rgba(238,236,243,.15)}
+  .pricebox .p{font-family:var(--serif);font-size:34px}
+  .pricebox small{display:block;font-family:var(--sans);font-size:15px;color:rgba(238,236,243,.7);margin-top:4px}
+
+  /* proof */
+  .quotes{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;margin-top:40px}
+  .quote{background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px}
+  .quote.big{grid-row:span 2}
+  .quote blockquote{font-family:var(--serif);font-size:21px;line-height:1.45}
+  .quote.big blockquote{font-size:24px}
+  .quote cite{display:block;margin-top:18px;font-style:normal;font-size:15px;color:var(--ink-soft)}
+  .quote cite strong{color:var(--ink)}
+
+  /* process of call */
+  .call{background:var(--paper-2)}
+  .call .cols{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .call ul{list-style:none;display:grid;gap:12px;margin-top:20px}
+  .call li{padding-left:28px;position:relative}
+  .call li::before{content:"";position:absolute;left:0;top:.6em;width:14px;height:3px;border-radius:2px;background:var(--grad)}
+  .callcard{background:var(--ink);color:var(--white);border-radius:22px;padding:36px}
+  .callcard h3{font-size:26px;margin-bottom:12px}
+  .callcard p{color:rgba(238,236,243,.78);margin-bottom:24px}
+
+  /* founders */
+  .founders .box{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:20px;padding:36px;background:#fff}
+  .founders h3{font-size:26px;margin-bottom:8px}
+  .founders p{color:var(--ink-soft);max-width:34em}
+  .link{font-weight:600;text-decoration:none;border-bottom:2px solid var(--blue);padding-bottom:2px}
+
+  /* about */
+  .about .cols{display:grid;grid-template-columns:.8fr 1.4fr;gap:56px;align-items:start}
+  .about .portrait{background:var(--paper-2)}
+  .about p{margin-bottom:16px;color:var(--ink-soft);font-size:18px}
+  .about p:first-of-type{color:var(--ink)}
+
+  /* final */
+  .final{background:var(--ink);color:var(--white);text-align:center}
+  .final h2{font-size:clamp(30px,4vw,44px);max-width:18em;margin:0 auto 18px}
+  .final p{color:rgba(238,236,243,.78);max-width:32em;margin:0 auto 32px;font-size:19px}
+
+  footer{background:var(--ink);color:rgba(238,236,243,.6);padding:28px 0 40px;font-size:14px;border-top:1px solid rgba(238,236,243,.1)}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+  footer a{text-decoration:none;margin-right:18px}
+  footer a:hover{color:var(--white)}
+
+  /* sticky mobile CTA */
+  .sticky{display:none}
+
+  @media (max-width:860px){
+    body{font-size:16px}
+    section{padding:64px 0}
+    .nav ul li:not(:last-child){display:none}
+    .hero{padding:32px 0 64px}
+    .hero .grid,.mirror .cols,.call .cols,.about .cols,.quotes{grid-template-columns:1fr}
+    .hero .portrait{display:none}
+    .steps,.leave{grid-template-columns:1fr}
+    .quote.big{grid-row:auto}
+    .sticky{display:block;position:fixed;left:0;right:0;bottom:0;z-index:10;padding:12px 16px;background:rgba(23,21,28,.96);border-top:1px solid rgba(238,236,243,.12)}
+    .sticky .btn{display:block;text-align:center;padding:14px}
+    footer{padding-bottom:90px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="index.html"><span class="mark">Š</span> Sapovalova Solutions</a>
-    <nav class="site">
-      <a href="coaching.html">The Next Move</a>
-      <a href="founders.html">For founders</a>
-      <a href="#about">About</a>
-      <a href="mailto:tamara@sapovalovasolutions.com">Contact</a>
-    </nav>
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="#"><span class="mono" aria-hidden="true">Š</span>Sapovalova Solutions</a>
+    <ul>
+      <li><a href="#the-next-move">The Next Move</a></li>
+      <li><a href="#founders">For founders</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a class="btn btn-primary" href="https://cal.com/tamara-medina/30min">Book a free call</a></li>
+    </ul>
   </div>
 </header>
 
-<main>
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">1:1 with Tamara Medina Sapovalova</div>
+      <h1>You left corporate. Now you need to decide <span class="grad-text">what comes next.</span></h1>
+      <p class="lead">Go back, or build something of your own? In six one to one sessions we make that decision on purpose, and you leave with a 90 day plan for whichever you choose.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://cal.com/tamara-medina/30min">Book a free discovery call</a>
+        <a class="btn btn-ghost" href="#the-next-move">See how it works</a>
+      </div>
+      <p class="reassure">30 minutes. No pressure. We both decide if it is a fit.</p>
+    </div>
+    <div class="portrait">
+      <img src="tamara-hero.jpg" width="900" height="1350" alt="Tamara Medina Sapovalova smiling, standing in a coaching session" style="object-position:50% 18%">
+    </div>
+  </div>
+</div>
 
-<section class="hero">
+<div class="trust">
   <div class="wrap">
-    <div class="eyebrow">One to one, with Tamara</div>
-    <h1>Clear decisions for <span class="grad-text">people who build.</span></h1>
-    <hr class="rule">
-    <p class="lede">Twenty years helping businesses grow, now working one to one with the women and founders who are building what comes next.</p>
-    <div class="row">
-      <a class="btn" href="#work">See how I work</a>
-      <a class="btn ghost" href="https://cal.com/tamara-medina/30min">Book a free call</a>
+    <span><strong>20 years</strong> helping businesses grow</span>
+    <span><strong>Latin America and Europe</strong></span>
+    <span>Has mentored founders at <strong>Imperial College London</strong> and <strong>Digital Catapult</strong></span>
+    <span>Sessions in <strong>English or Spanish</strong></span>
+  </div>
+</div>
+
+<!-- MIRROR -->
+<section class="mirror" id="does-this-sound-like-you">
+  <div class="wrap">
+    <div class="eyebrow grad-text" style="color:#5aa89b">Does this sound like you?</div>
+    <h2>You have time and some money. You don't want to waste either.</h2>
+    <div class="cols">
+      <ul>
+        <li>You left a corporate role, through redundancy, a negotiated exit, or your own choice.</li>
+        <li>Your payout gives you some room, but not forever.</li>
+        <li>Part of you wants to go back. Part of you wants to build something of your own.</li>
+        <li>Everyone has advice. None of it fits.</li>
+      </ul>
+      <div class="after">
+        You don't need more options. You need a clear decision, and someone to think it through with you.
+        <span>That is what these six sessions are for.</span>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="work">
+<!-- OFFER -->
+<section class="offer" id="the-next-move">
   <div class="wrap">
-    <h2>Two ways to work together</h2>
-    <p class="lede">Pick the one that sounds like you. Both start with a conversation.</p>
-    <div class="cards">
-      <div class="card">
-        <div class="tag">For women between jobs</div>
-        <h3>The Next Move</h3>
-        <p>You left corporate and haven't decided whether to go back or build something of your own. Six sessions to make that decision, and a plan for whichever you choose.</p>
-        <a class="more" href="coaching.html">Read more →</a>
+    <div class="eyebrow">The Next Move</div>
+    <h2>Six sessions. One decision. A plan.</h2>
+    <p class="sub">Built around you, not around a template. One hour each, one to one.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="n">Session 1</div>
+        <h3>Where you really are</h3>
+        <p>Your options, your runway, and what is pulling you in each direction.</p>
       </div>
-      <div class="card">
-        <div class="tag">For founders</div>
-        <h3>A clear head and a stronger team</h3>
-        <p>You're building a company and everyone looks to you. One-to-one sessions on leading people, making big decisions, and keeping your own energy steady.</p>
-        <a class="more" href="founders.html">Read more →</a>
+      <div class="step">
+        <div class="n">Sessions 2 to 5</div>
+        <h3>Built around you</h3>
+        <p>Testing a business idea, rethinking your career, working through what is holding you back. We focus on what you need.</p>
       </div>
+      <div class="step">
+        <div class="n">Session 6</div>
+        <h3>The decision</h3>
+        <p>You leave with your choice and the first 90 days mapped out.</p>
+      </div>
+    </div>
+
+    <div class="leave">
+      <div>A clear decision, made on purpose rather than by default.</div>
+      <div>An honest picture of what each option costs, in money and in energy.</div>
+      <div>A 90 day plan for the path you choose.</div>
+    </div>
+
+    <div class="pricebox">
+      <div>
+        <div class="p">From 2,500 EUR</div>
+        <small>6 one hour sessions, 1:1. Compare it with the cost of a wrong guess.</small>
+      </div>
+      <a class="btn btn-primary" href="https://cal.com/tamara-medina/30min">Book a free discovery call</a>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="narrow">
-    <h2>What people say</h2>
+<!-- PROOF -->
+<section id="proof">
+  <div class="wrap">
+    <div class="eyebrow" style="color:#5aa89b">What clients say</div>
+    <h2>People who were stuck, and then weren't.</h2>
     <div class="quotes">
-      <blockquote>
-        <p>“Tamara was brilliant at using the right framework and guidance to help me arrive with clarity at the right decision.”</p>
-        <cite>Stelios Papagrigoriou, CEO &amp; Founder, IN-VR</cite>
-      </blockquote>
-      <blockquote>
-        <p>“What started as a very vague idea, without any hope and feeling stuck, has become a reality.”</p>
-        <cite>Ana Campo, EMEA Commercial Operations Director</cite>
-      </blockquote>
+      <figure class="quote big">
+        <blockquote>“I met Tamara at a breaking point in my professional life. Her clarity, focus and understanding of my situation helped me rebuild my possibilities with hope and energy. More than helping me find direction, which she did, she helped me identify the values that define me and that my life is built on.”</blockquote>
+        <cite><strong>Mercedes García Ocejo</strong><br>Consultant and independent producer</cite>
+      </figure>
+      <figure class="quote">
+        <blockquote>“Tamara was brilliant at using the right framework and guidance to help me arrive with clarity at the right decision.”</blockquote>
+        <cite><strong>Stelios Papagrigoriou</strong><br>CEO &amp; Founder, IN-VR</cite>
+      </figure>
+      <figure class="quote">
+        <blockquote>“What started as a very vague idea, without any hope and feeling stuck, has become a reality.”</blockquote>
+        <cite><strong>Ana Campo</strong><br>EMEA Commercial Operations Director</cite>
+      </figure>
     </div>
   </div>
 </section>
 
-<section id="about">
-  <div class="narrow">
-    <div class="eyebrow">About</div>
-    <h2>Tamara Medina Sapovalova</h2>
-    <p>I've spent twenty years helping businesses grow across Latin America and Europe. I've mentored founders at MassChallenge, run a programme for early-stage entrepreneurs, and worked one to one with CEOs and with women at a turning point in their careers.</p>
-    <p>I know a business is only as strong as the people in it, and that most hard decisions are really decisions about people, including yourself. You'll work with me directly.</p>
-    <p>I work in English and Spanish, and I'm based in the Czech Republic. I also run <a href="https://kafeconproposito.com/en/">Kafe con Propósito</a>, a community for professional women.</p>
-    <div class="row">
-      <a class="btn" href="https://cal.com/tamara-medina/founders-intro-call">Book a free call</a>
+<!-- DISCOVERY CALL -->
+<section class="call">
+  <div class="wrap cols">
+    <div>
+      <h2>What happens on the free call</h2>
+      <p class="sub">A short, honest conversation. Not a sales pitch.</p>
+      <ul>
+        <li>You tell me where you are right now.</li>
+        <li>I tell you what I see, and whether I can help.</li>
+        <li>If it is not a fit, I will say so.</li>
+        <li>If it is, we agree on a start date. No decision needed on the call.</li>
+      </ul>
+    </div>
+    <div class="callcard">
+      <h3>30 minutes, free.</h3>
+      <p>Pick a time that suits you. You will get a calendar invite straight away.</p>
+      <a class="btn btn-primary" href="https://cal.com/tamara-medina/30min">Choose a time</a>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="narrow">
-    <p class="small">I also help small teams use AI to take repetitive work off their plate. If that's what you're looking for, <a href="mailto:tamara@sapovalovasolutions.com?subject=AI%20help">send me an email</a>.</p>
+<!-- FOUNDERS -->
+<section class="founders" id="founders">
+  <div class="wrap">
+    <div class="box">
+      <div>
+        <div class="eyebrow" style="color:#5aa89b;margin-bottom:10px">For founders</div>
+        <h3>Already building? A clear head and a stronger team.</h3>
+        <p>One to one sessions on leading people, making big decisions, and keeping your own energy steady.</p>
+      </div>
+      <a class="link" href="https://sapovalovasolutions.com/founders.html">See the founders page →</a>
+    </div>
   </div>
 </section>
 
-</main>
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap cols">
+    <div class="portrait">
+      <img src="tamara-about.jpg" width="800" height="1200" alt="Portrait of Tamara Medina Sapovalova in a beige coat, outdoors" loading="lazy" style="object-position:50% 25%">
+    </div>
+    <div>
+      <div class="eyebrow" style="color:#5aa89b;margin-bottom:10px">About</div>
+      <h2>Tamara Medina Sapovalova</h2>
+      <p>I have spent twenty years helping businesses grow across Latin America and Europe. I have mentored founders at Imperial College London, Digital Catapult, the Mayor's International Business Programme, Start-Up Chile and MassChallenge, run a programme for early stage entrepreneurs, and worked one to one with CEOs and with women at a turning point in their careers.</p>
+      <p>I know a business is only as strong as the people in it, and that most hard decisions are really decisions about people, including yourself. You will work with me directly.</p>
+      <p>I work in English and Spanish, and I am based in the Czech Republic. I also run <a class="link" href="https://kafeconproposito.com/en/">Kafe con Propósito</a>, a community for professional women.</p>
+    </div>
+  </div>
+</section>
 
-<footer class="site">
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <h2>If that is where you are right now, let's talk.</h2>
+    <p>Tell me where you are. We will both know after 30 minutes whether this is the right fit.</p>
+    <a class="btn btn-primary" href="https://cal.com/tamara-medina/30min">Book a free discovery call</a>
+  </div>
+</section>
+
+<footer>
   <div class="wrap">
     <div>© 2026 Sapovalova Solutions</div>
     <div>
       <a href="mailto:tamara@sapovalovasolutions.com">Email</a>
       <a href="https://www.linkedin.com/in/tamaramedinasapovalova/">LinkedIn</a>
-      <a href="privacy.html">Privacy</a>
+      <a href="https://sapovalovasolutions.com/privacy.html">Privacy</a>
     </div>
   </div>
 </footer>
+
+<div class="sticky"><a class="btn btn-primary" href="https://cal.com/tamara-medina/30min">Book a free discovery call</a></div>
 
 </body>
 </html>
