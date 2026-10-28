@@ -1,0 +1,342 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Goal Cycle</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: cycle diagram on the left and the open step on the right at laptop width; stacked on a phone. Mini goals timeline sits below. */
+:root{
+  --bg:#f5f1e8; --card:#ffffff; --line:#ddd6c6; --ink:#1d3b3f; --muted:#4a6266;
+  --green:#5e8a5a; --green-t:#cfe3cc;
+  --red:#c2492f; --red-t:#f3c6b8;
+  --blue:#3d79b5; --blue-t:#c9dcf1;
+  --gold:#b7791f; --gold-t:#f6dfa6;
+  --btn:#1d3b3f; --btn-ink:#ffffff; --shadow:rgba(29,59,63,.25);
+  --serif:Newsreader,Georgia,serif; --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12262a; --card:#1a3438; --line:#2e4f54; --ink:#eef3f1; --muted:#a9c3c6;
+    --green:#8fc48a; --green-t:#2b4a2d;
+    --red:#f0836a; --red-t:#552b22;
+    --blue:#7db4ea; --blue-t:#1f3d5c;
+    --gold:#e0b04d; --gold-t:#4d3a14;
+    --btn:#eef3f1; --btn-ink:#12262a; --shadow:rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12262a; --card:#1a3438; --line:#2e4f54; --ink:#eef3f1; --muted:#a9c3c6;
+  --green:#8fc48a; --green-t:#2b4a2d;
+  --red:#f0836a; --red-t:#552b22;
+  --blue:#7db4ea; --blue-t:#1f3d5c;
+  --gold:#e0b04d; --gold-t:#4d3a14;
+  --btn:#eef3f1; --btn-ink:#12262a; --shadow:rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:17px; line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:32px 48px;
+}
+button{font-family:inherit}
+button:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1{margin:6px 0 8px;font-family:var(--serif);font-weight:500;font-size:clamp(30px,6.5vw,40px);line-height:1.15;text-wrap:balance}
+.hint{margin:0;color:var(--muted);font-size:16px}
+.main{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;margin-top:28px}
+@media (min-width:900px){.main{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px;align-items:start}}
+
+/* Cycle diagram */
+.left{display:flex;flex-direction:column;gap:20px;min-width:0}
+.diagram{container-type:inline-size;position:relative;width:100%;max-width:600px;margin:0 auto;aspect-ratio:595/590}
+.ring{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke-width:20;stroke-linecap:butt;overflow:visible}
+.ring g{transition:opacity .4s ease}
+.node{
+  position:absolute;aspect-ratio:1;border-radius:50%;border:3px solid var(--c);background:var(--card);color:var(--ink);
+  padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;
+  font-family:var(--serif);transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.node[aria-pressed="true"]{background:var(--ct);transform:scale(1.08);box-shadow:0 8px 24px var(--shadow)}
+.node .n{font:600 clamp(12px,2.3cqw,14px)/1 var(--sans);color:var(--muted)}
+.node .t{font-weight:500;font-size:clamp(12px,3.1cqw,18px);line-height:1.15}
+.node.goal .t{font-size:clamp(18px,5cqw,30px)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:center;font-size:15px;color:var(--muted);margin:0;padding:0;list-style:none}
+.legend li{display:flex;gap:8px;align-items:center}
+.legend i{width:14px;height:14px;border-radius:50%;background:var(--sw);display:block}
+
+/* Step panel */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 20px 24px;display:flex;flex-direction:column;gap:18px;min-width:0;scroll-margin-top:12px}
+@media (min-width:900px){.panel{padding:40px 44px 36px;min-height:660px}}
+.chip{align-self:flex-start;padding:5px 14px;border-radius:999px;background:var(--ct);border:1px solid var(--c);font-size:13px;font-weight:600;letter-spacing:.04em;line-height:18px}
+.step-name{margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(40px,10vw,56px);line-height:1.08}
+.step-tag{margin:0;font-family:var(--serif);font-style:italic;font-size:clamp(20px,4.6vw,23px);line-height:1.3;color:var(--muted)}
+.block{display:flex;flex-direction:column;gap:10px}
+.block-label{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.q{display:flex;gap:14px;align-items:flex-start;margin:0}
+.q::before{content:"";flex:none;width:9px;height:9px;margin-top:9px;border-radius:50%;background:var(--c)}
+.q span{min-width:0}
+.pairs{display:flex;flex-direction:column;gap:8px}
+.pair-head,.pair{display:grid;grid-template-columns:minmax(96px,140px) minmax(0,1fr);gap:10px}
+.pair-head{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pair{font-size:15px;line-height:1.4}
+.pair .ob{padding:8px 10px;border:1.5px solid var(--red);border-radius:10px;background:var(--red-t);font-weight:600;display:flex;align-items:center}
+.pair .ac{padding:8px 12px;border:1.5px solid var(--blue);border-radius:10px;background:var(--blue-t);display:flex;align-items:center}
+.to-timeline{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--ink)}
+.spacer{flex:1}
+.nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.btn{min-height:48px;padding:0 24px;border-radius:24px;border:1px solid var(--btn);font-size:16px;font-weight:500;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--btn)}
+.btn.solid{background:var(--btn);color:var(--btn-ink)}
+.btn:disabled{opacity:.35;cursor:default}
+
+/* Timeline */
+.timeline{margin-top:64px;padding-top:40px;border-top:1px solid var(--line);scroll-margin-top:16px}
+.timeline h2{margin:6px 0 8px;font-family:var(--serif);font-weight:500;font-size:clamp(28px,6vw,38px);line-height:1.15;text-wrap:balance}
+.timeline p.lead{margin:0;max-width:44ch;color:var(--muted);font-size:18px}
+.tl{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:32px}
+@media (min-width:900px){.tl{flex-direction:row;justify-content:center;gap:28px}}
+.minis{display:flex;align-items:flex-start;gap:12px;width:100%;max-width:640px}
+.mini{flex:1 1 0;min-width:0;max-width:190px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px}
+.gsvg{display:block;width:100%;aspect-ratio:560/540;max-width:100%}
+.mini b{font-size:15px;font-weight:600;line-height:1.3}
+.mini span{font-size:14px;line-height:1.35;color:var(--muted)}
+.op{font-family:var(--serif);font-size:40px;line-height:1;color:var(--muted);flex:none}
+.minis .op{align-self:flex-start;margin-top:clamp(24px,7vw,56px)}
+.big{container-type:inline-size;position:relative;width:min(240px,70%);flex:none}
+@media (min-width:900px){.big{width:300px}}
+.big .lbl{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--serif);font-weight:500;font-size:clamp(12px,6.5cqw,20px);line-height:1.15}
+.foot{margin-top:56px;font-size:14px;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="g" viewBox="80 200 560 540">
+      <g fill="none" stroke-width="24">
+        <path d="M420 470 L610 470 A250 250 0 0 1 591 565.7 A250 250 0 0 1 435.2 708.4" style="stroke:var(--green)"/>
+        <path d="M435.2 708.4 A250 250 0 0 1 207.8 668.3" style="stroke:var(--red)"/>
+        <path d="M207.8 668.3 A250 250 0 0 1 110.2 459.1 A250 250 0 0 1 360 220" style="stroke:var(--blue)"/>
+        <path d="M360 220 A250 250 0 0 1 513.9 273" style="stroke:var(--green)"/>
+      </g>
+      <path d="M537.5 291.5 L502.8 287.2 L525 258.8 Z" style="fill:var(--green);stroke:none"/>
+      <circle cx="360" cy="470" r="72" stroke-width="5" style="fill:var(--gold-t);stroke:var(--gold)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Business Building Blocks</div>
+    <h1>Master Goals with the Goal Cycle</h1>
+    <p class="hint">Select a step to see its questions.</p>
+  </header>
+
+  <div class="main">
+    <div class="left">
+      <div class="diagram" id="diagram">
+        <svg class="ring" viewBox="55 200 595 590" aria-hidden="true" focusable="false">
+          <g data-k="1">
+            <path d="M430 470 L444 470" style="stroke:var(--green)"/>
+            <path d="M444 452 L472 470 L444 488 Z" style="fill:var(--green);stroke:none"/>
+            <path d="M560 470 L610 470 A250 250 0 0 1 591 565.7" style="stroke:var(--green)"/>
+          </g>
+          <g data-k="2"><path d="M591 565.7 A250 250 0 0 1 435.2 708.4" style="stroke:var(--green)"/></g>
+          <g data-k="3"><path d="M435.2 708.4 A250 250 0 0 1 207.8 668.3" style="stroke:var(--red)"/></g>
+          <g data-k="4"><path d="M207.8 668.3 A250 250 0 0 1 110.2 459.1" style="stroke:var(--blue)"/></g>
+          <g data-k="5"><path d="M110.2 459.1 A250 250 0 0 1 360 220" style="stroke:var(--blue)"/></g>
+          <g data-k="6">
+            <path d="M360 220 A250 250 0 0 1 513.9 273" style="stroke:var(--green)"/>
+            <path d="M537.5 291.5 L502.8 287.2 L525 258.8 Z" style="fill:var(--green);stroke:none"/>
+          </g>
+        </svg>
+      </div>
+      <ul class="legend">
+        <li style="--sw:var(--green)"><i></i>Move forward</li>
+        <li style="--sw:var(--red)"><i></i>What stops you</li>
+        <li style="--sw:var(--blue)"><i></i>Think</li>
+        <li style="--sw:var(--gold)"><i></i>Your goal</li>
+      </ul>
+    </div>
+
+    <section class="panel" id="panel" aria-label="Step questions">
+      <div id="content" aria-live="polite" style="display:contents"></div>
+      <div class="spacer"></div>
+      <div class="nav">
+        <button type="button" class="btn ghost" id="back">Back</button>
+        <button type="button" class="btn solid" id="next">Next</button>
+      </div>
+    </section>
+  </div>
+
+  <section class="timeline" id="timeline">
+    <div class="eyebrow">Mini goals timeline</div>
+    <h2>Many mini goals add up to your big goal</h2>
+    <p class="lead">Run the Goal Cycle once for each one.</p>
+    <div class="tl">
+      <div class="minis">
+        <div class="mini">
+          <svg class="gsvg" role="img" aria-label="A Goal Cycle in the shape of a G, mini goal 1"><use href="#g" width="100%" height="100%"/></svg>
+          <b>Mini goal 1</b><span>Action + target date</span>
+        </div>
+        <div class="op" aria-hidden="true">+</div>
+        <div class="mini">
+          <svg class="gsvg" role="img" aria-label="A Goal Cycle in the shape of a G, mini goal 2"><use href="#g" width="100%" height="100%"/></svg>
+          <b>Mini goal 2</b><span>Action + target date</span>
+        </div>
+        <div class="op" aria-hidden="true">+</div>
+        <div class="mini">
+          <svg class="gsvg" role="img" aria-label="A Goal Cycle in the shape of a G, mini goal 3"><use href="#g" width="100%" height="100%"/></svg>
+          <b>Mini goal 3</b><span>Action + target date</span>
+        </div>
+      </div>
+      <div class="op" aria-hidden="true">=</div>
+      <div class="big">
+        <svg class="gsvg" role="img" aria-label="Your big goal, a larger G"><use href="#g" width="100%" height="100%"/></svg>
+        <div class="lbl" aria-hidden="true"><span>BIG<br>GOAL</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">SapovalovaSolutions.com</div>
+</div>
+
+<script>
+(function(){
+  var X0=55, Y0=200, W=595, H=590;
+  var STEPS=[
+    {name:'Goal',c:'gold',cx:360,cy:470,d:144,goal:true,
+     tag:'Begin with the end in mind.',
+     blocks:[{label:'',items:['What do you want? And by when?','If everything was as you want it, what would be happening?','How will you know when you achieve it?']}]},
+    {name:'Motivation',c:'green',cx:535,cy:470,d:124,
+     tag:'Why now?',
+     blocks:[{label:'',items:['Why is this important to you?','How will it benefit you or others achieving this goal?','What will be the consequences if you don’t do this now?']}]},
+    {name:'Strengths',c:'green',cx:536.8,cy:646.8,d:124,
+     tag:'How much have you done already towards your goal?',
+     blocks:[{label:'',items:['What skills and abilities do you have that will help you achieve this goal?','What kind of resources do you already have?','What have you done specifically to achieve this goal?']}]},
+    {name:'Obstacles',c:'red',cx:316.6,cy:716.2,d:124,
+     tag:'What challenges do you expect to meet?',
+     blocks:[{label:'',items:['What has stopped you?']}]},
+    {name:'Strategy',c:'blue',cx:133.4,cy:575.7,d:124,
+     tag:'How are you going to overcome these challenges?',
+     blocks:[{label:'Ask yourself',items:['How did you overcome similar challenges in the past?','What did you do that was successful?']}],
+     pairs:[
+       ['Lack of time','Prioritize my day, set boundaries with others'],
+       ['Procrastination','Find support, do the task with someone else'],
+       ['Lack of knowledge','Research, attend courses or seminars, ask for help'],
+       ['Lack of resources','Research opportunities, ask for help']]},
+    {name:'Options',c:'blue',cx:143.5,cy:345,d:124,
+     tag:'Generate as many options as possible.',
+     blocks:[
+       {label:'What could you do…',items:['…if you had unlimited resources?','…if you devoted yourself to achieve this goal?','…if you weren’t scared of anything?','…if you totally believed in yourself?','If you ask your best friend, what might they suggest?']},
+       {label:'Then choose one option',items:['The fastest, the easiest, the one that appeals to you most, the one that gives the best results?','What might stop you? And what will you do about it?']}]},
+    {name:'Action',c:'green',cx:576.5,cy:345,d:124,
+     tag:'Take action!',
+     blocks:[{label:'Action + target date',items:['When will you take action?']}]}
+  ];
+
+  var cur=0;
+  var diagram=document.getElementById('diagram');
+  var panel=document.getElementById('panel');
+  var content=document.getElementById('content');
+  var backBtn=document.getElementById('back');
+  var nextBtn=document.getElementById('next');
+  var groups=document.querySelectorAll('.ring g[data-k]');
+  var nodes=[];
+
+  function el(tag,cls,text){
+    var e=document.createElement(tag);
+    if(cls) e.className=cls;
+    if(text!==undefined) e.textContent=text;
+    return e;
+  }
+  function setColors(node,c){
+    node.style.setProperty('--c','var(--'+c+')');
+    node.style.setProperty('--ct','var(--'+c+'-t)');
+  }
+  function narrow(){ return window.matchMedia('(max-width: 899px)').matches; }
+  function reduce(){ return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+  STEPS.forEach(function(s,i){
+    var b=el('button','node'+(s.goal?' goal':''));
+    b.type='button';
+    b.style.left=((s.cx-s.d/2-X0)/W*100)+'%';
+    b.style.top=((s.cy-s.d/2-Y0)/H*100)+'%';
+    b.style.width=(s.d/W*100)+'%';
+    b.setAttribute('aria-label','Step '+(i+1)+': '+s.name);
+    setColors(b,s.c);
+    b.appendChild(el('span','n',String(i+1)));
+    b.appendChild(el('span','t',s.name));
+    b.addEventListener('click',function(){ go(i,true); });
+    diagram.appendChild(b);
+    nodes.push(b);
+  });
+
+  function render(){
+    var s=STEPS[cur];
+    setColors(panel,s.c);
+    nodes.forEach(function(n,i){ n.setAttribute('aria-pressed',i===cur?'true':'false'); });
+    groups.forEach(function(g){ g.style.opacity = cur>=Number(g.getAttribute('data-k')) ? '1' : '0.2'; });
+
+    content.textContent='';
+    var chip=el('div','chip','Step '+(cur+1)+' of 7');
+    content.appendChild(chip);
+    content.appendChild(el('h2','step-name',s.name));
+    content.appendChild(el('p','step-tag',s.tag));
+    s.blocks.forEach(function(bl){
+      var blk=el('div','block');
+      if(bl.label) blk.appendChild(el('div','block-label',bl.label));
+      bl.items.forEach(function(q){
+        var row=el('p','q'); row.appendChild(el('span',null,q)); blk.appendChild(row);
+      });
+      content.appendChild(blk);
+    });
+    if(s.pairs){
+      var wrap=el('div','pairs');
+      var head=el('div','pair-head');
+      head.appendChild(el('span',null,'Obstacle'));
+      head.appendChild(el('span',null,'What you will do'));
+      wrap.appendChild(head);
+      s.pairs.forEach(function(p){
+        var r=el('div','pair');
+        r.appendChild(el('span','ob',p[0]));
+        r.appendChild(el('span','ac',p[1]));
+        wrap.appendChild(r);
+      });
+      content.appendChild(wrap);
+    }
+    if(cur===STEPS.length-1){
+      var a=el('a','to-timeline','See how mini goals add up to a big goal');
+      a.href='#timeline';
+      content.appendChild(a);
+    }
+    backBtn.disabled = cur===0;
+    nextBtn.textContent = cur===STEPS.length-1 ? 'Start a new cycle' : 'Next: '+STEPS[cur+1].name;
+  }
+
+  function go(i,fromNode){
+    cur=Math.max(0,Math.min(STEPS.length-1,i));
+    render();
+    if(narrow()){
+      var top=panel.getBoundingClientRect().top;
+      if(fromNode || top<0){
+        panel.scrollIntoView({behavior:reduce()?'auto':'smooth',block:'start'});
+      }
+    }
+  }
+
+  backBtn.addEventListener('click',function(){ go(cur-1,false); });
+  nextBtn.addEventListener('click',function(){ go(cur===STEPS.length-1?0:cur+1,false); });
+  render();
+})();
+</script>
+
+</body></html>
